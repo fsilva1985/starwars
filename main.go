@@ -20,7 +20,7 @@ func main() {
 func setupRouter() *gin.Engine {
 	es := elasticsearch.New(
 		[]string{
-			"http://localhost:9200",
+			"http://elasticsearch:9200",
 		},
 		"starwars",
 	)
