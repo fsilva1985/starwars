@@ -13,11 +13,6 @@ import (
 )
 
 func main() {
-	r := setupRouter()
-	r.Run(":8080")
-}
-
-func setupRouter() *gin.Engine {
 	es := elasticsearch.New(
 		[]string{
 			"http://elasticsearch:9200",
@@ -25,8 +20,19 @@ func setupRouter() *gin.Engine {
 		"starwars",
 	)
 
-	planetStorage := elasticsearch.NewPlanetStorage(es)
+	tr := &http.Transport{
+		MaxIdleConns:    10,
+		IdleConnTimeout: 30 * time.Second,
+	}
 
+	httpClient := &http.Client{Transport: tr}
+
+	r := setupRouter(es, httpClient)
+	r.Run(":8080")
+}
+
+func setupRouter(es elasticsearch.Elasticsearch, httpClient *http.Client) *gin.Engine {
+	planetStorage := elasticsearch.NewPlanetStorage(es)
 	store := persistence.NewInMemoryStore(time.Second)
 
 	r := gin.Default()
@@ -69,7 +75,7 @@ func setupRouter() *gin.Engine {
 			return
 		}
 
-		client := swapi.NewClient()
+		client := swapi.NewClient(httpClient)
 		planetSwapi := swapi.NewPlanet(client)
 		planetResponse, err := planetSwapi.GetOne(planet.Name)
 		if err != nil {
