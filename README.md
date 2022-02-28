@@ -9,13 +9,7 @@
 ## End-point: GetAll
 ### Method: GET
 >```
->http://localhost:8080/planets
->```
-
-With Search
-
->```
->http://localhost:8080/planets?name={name}
+>curl --location -g --request GET 'http://localhost:8080/planets?name='
 >```
 
 ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
@@ -23,7 +17,7 @@ With Search
 ## End-point: GetOne
 ### Method: GET
 >```
->http://localhost:8080/planets/{ID}
+>curl --location -g --request GET 'http://localhost:8080/planets/{ID}'
 >```
 
 ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
@@ -31,17 +25,14 @@ With Search
 ## End-point: Create
 ### Method: POST
 >```
->http://localhost:8080/planets/
+>curl --location --request POST 'http://localhost:8080/planets/' \
+>  --header 'Content-Type: application/json' \
+>  --data-raw '{
+>    "Name": "Planet",
+>    "Climate": "Climate",
+>    "Terrain": "Terrain"
+>}'
 >```
-### Body (**json**)
-
-```json
-{
-    "Name": "Planet",
-    "Climate": "Climate",
-    "Terrain": "Terrain"
-}
-```
 
 
 ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
@@ -49,6 +40,6 @@ With Search
 ## End-point: Delete
 ### Method: DELETE
 >```
->http://localhost:8080/planets/{ID}
+>curl --location -g --request DELETE 'http://localhost:8080/planets/{ID}'
 >```
 
