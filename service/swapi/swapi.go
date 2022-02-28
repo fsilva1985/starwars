@@ -2,7 +2,6 @@ package swapi
 
 import (
 	"net/http"
-	"time"
 )
 
 type Client interface {
@@ -10,15 +9,10 @@ type Client interface {
 	Url() string
 }
 
-func NewClient() Client {
-	tr := &http.Transport{
-		MaxIdleConns:    10,
-		IdleConnTimeout: 30 * time.Second,
-	}
-
+func NewClient(httpClient *http.Client) Client {
 	return &httpClientImpl{
 		url:    "https://swapi.dev/api/",
-		client: &http.Client{Transport: tr},
+		client: httpClient,
 	}
 }
 
